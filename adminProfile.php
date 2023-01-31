@@ -1,21 +1,32 @@
 <?php
 include "logic.php";
 session_start();
+//include "auth_session.php";
+$_SESSION['Firstname'];
+if (!isset($_SESSION['login_user'])) {
+    header("Location: login.php");
+}
+if (!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+    header("Location: login.php");
+}
+//USERID should be stored in Session, for this part to work.
+//SQL to find the USERID From TableRecipes
+$sqluserid = ("SELECT UserID FROM tblrecipe where UserID = UserID");
+$resultID = mysqli_query($conn, $sqluserid);
+$count = mysqli_num_rows($resultID);
+$row = mysqli_fetch_assoc($resultID);
+$UserID = $row['UserID'];
 
-
-$sql = "SELECT * FROM tblrecipe";
-$result = mysqli_query($conn, $sql);
-$count = mysqli_num_rows($result);
-$row = mysqli_fetch_assoc($result);
-$recipetitle = $row['RecipeTitle'];
-$recipedescription = $row['RecipeDescription'];
-$recipecalories = $row['RecipeCalories'];
-
-
+//Statement 
+$sql = ("SELECT * FROM tblrecipe where UserID = '{$_SESSION['UserID']}' ORDER BY RecipeID ASC LIMIT 5");
+$query = mysqli_query($conn, $sql);
+$result = $conn->query($sql);
+$count = mysqli_num_rows($query);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 
 <head>
     <meta charset="UTF-8">
@@ -46,7 +57,7 @@ $recipecalories = $row['RecipeCalories'];
                         <a class="nav-link active" aria-current="page" href="/index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Recipes</a>
+                        <a class="nav-link" href="/recipes.php">Recipes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
@@ -56,7 +67,7 @@ $recipecalories = $row['RecipeCalories'];
                             More
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Contact</a></li>
+                            <li><a class="dropdown-item" href="/contact.php">Contact</a></li>
                             <li><a class="dropdown-item" href="/login.php">Login</a></li>
                         </ul>
                     </li>
@@ -69,35 +80,78 @@ $recipecalories = $row['RecipeCalories'];
                     Logout
                 </a>
             </div>
+
+
+
+
+
+
     </nav>
 
+    <div>
+        <?php
+        print_r($_SESSION);
+        ?>
+    </div>
+
+    <div class="grid-container1 my-5">
+        <div class="item1 d-flex">
+            <h1> Welcome <?php echo ($_SESSION['Firstname']) ?>!</h1>
 
 
+        </div>
+        <div class="item2">
+            <a href="" class="btn btn-dark">View My Recipes</a> <br>
+            <a href="" class="btn btn-dark">View Profile Details</a><br>
+            <a href="addrecipe.php" class="btn btn-dark">Add New Recipe</a>
 
 
-    <?php foreach ($result as $q) { ?>
-
-        <div class="container mt-5 pt-5 rounded" style="display:flex;">
-            <div class="row">
-                <div style="min-height:20px; ;" class="align-items-center d-flex justify-content-center">
-                    <div class="card text-white bg-dark mt-2">
-                        <div class="card-body d-flex" style="width:48rem; height:20rem;     display: flex !important;
-    flex-direction: column;
-    align-content: flex-start;
-    justify-content: space-around;">
-                            <h2 class="card-title"><?php echo $q['RecipeTitle']; ?></h2>
-                            <p style="font-size: 15px;" class="card-text"> <?php echo  substr($q['RecipeDescription'], 0, 50); ?>... </p>
-                            <p style="position:absolute; right:0px; bottom:20%;" class="card-text"> <?php echo $q['RecipeCalories']; ?></p>
-                            <a style="" href="view.php?PostID=<?php $q['RecipeID']; ?>" class="btn btn-light"> Zobacz całe...</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
         </div>
 
-    <?php }  ?>
+        <div class="item3">
+            <p>Your Recent Recipes</p>
+            <!-- for loop to print out 4 latest recipes added by the user. -->
+            <?php $i = 0;
 
+            foreach ($query as $q) :
+                //if the table will have 3 rows of Recipes, stop the sequence.
+                if ($i == 3) {
+                    break;
+                } { ?>
+
+                    <table class='my-3 profileRecipe'>
+                        <tr>
+                            <th>Recipe Title: &nbsp; </th>
+                            <th>Calories: &nbsp; </th>
+                            <th>Cooking Time: &nbsp; </th>
+                            <th></th>
+                        </tr>
+
+
+                        <?php
+                        //printing out each Collumn with the attributes below. 
+                        echo "<tr><td>" . $q['RecipeTitle']
+                            . "</td><td>"
+                            . $q['RecipeCalories']
+                            . "</td><td>"
+                            . $q['CookingTime'] . "Mins"
+                            //a button to View the recipe. using the RecipeID to then fill out the detials ont he next page.
+                            . "<td> <a class='btn btn-dark' href='editRecipe.php?RecipeID=" . $q['RecipeID'] . "'> View </a> </td> 
+                    </tr>" ?>
+                    </table>
+                <?php }  ?>
+            <?php
+                $i++;
+            endforeach;
+            if ($i == 0) {
+                echo "<p class='bg-info mx-3 rounded '; style='font-style:italic' >    No Recipes have been created yet. </p> ";
+            }
+            ?>
+
+        </div>
+        <div class="item4">
+            Right</div>
+    </div>
 
 
 
@@ -122,6 +176,7 @@ $recipecalories = $row['RecipeCalories'];
         </div>
 
     </div>
+
 
 </body>
 

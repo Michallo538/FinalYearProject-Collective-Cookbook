@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="submit" class="btn btn-primary" name="register" value="Register">
                 <a href="index.php" class="btn btn-dark">Cancel</a>
             </div>
-            <label class="errorMsg" id="error"><?php echo $error ?></label>
+            <label class="errorMsg mt-3 my-2" id="error"><?php echo $error ?></label>
         </div>
     </form>
     <div class="container-fluid justify-content-center align-items-center ">

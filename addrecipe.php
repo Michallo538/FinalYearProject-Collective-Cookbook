@@ -1,5 +1,12 @@
 <?php
 include "logic.php";
+session_start();
+if (!isset($_SESSION['login_user'])) {
+    header("Location: login.php");
+}
+if (!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+    header("Location: login.php");
+}
 
 
 
@@ -54,7 +61,6 @@ include "logic.php";
                     </li>
                 </ul>
 
-
             </div>
             <a href="/login.php">
                 <svg class="profileicon" xmlns="http://www.w3.org/2000/svg" style="width: 40px;" viewBox="0 0 448 512">
@@ -66,6 +72,11 @@ include "logic.php";
 
     </nav>
 
+    <div>
+        <?php
+        print_r($_SESSION);
+        ?>
+    </div>
 
     <div class="fluid-container mt-5  align-items-center">
         <h2 class="text-center">Add your Recipe by filling out the details below.</h2>
@@ -73,27 +84,26 @@ include "logic.php";
 
     <form method="GET">
 
-        <div class=" RecipeAddbox align-content-center fluid-container text-center">
-            <div class="container align-content-center text-center">
-                <div class="form-group" style="width:50%; float: left;">
-                    <label class="my-1 form-label">Recipe Title</label><br>
-                    <input class=" w-50 h-25 form control my-3" required type="text" placeholder="Recipe Title" name="RecipeTitle"> <Br>
-                    <label class="my-1 form-label"></label>
-                    <input class="w-50 h-25 form control my-3" required type="text" placeholder="Recipe Description" name="RecipeDescription"> <Br>
-
-                </div>
-                <div style="width: 50%; float: right;">
-                    <label class="my-1 form-label">Recipe Steps</label> <br>
-                    <input class="w-50 h-25 form control my-3" required type="text" placeholder="Recipe Steps" name="RecipeSteps"> <Br>
-                    <label class="my-1 form-label">Recipe Title</label> <br>
-                    <input class="w-50 h-25 form control my-3" required type="text" placeholder="Recipe Title" name="RecipeTitle"> <Br>
-
-                </div>
-
+        <div class="RecipeAddbox align-content-center fluid-container text-center">
+            <div class="form-group" style="width:50%; float: left;">
+                <label class="my-1 form-label">Recipe Title</label><br>
+                <input class=" w-50 h-25 form control my-3" required type="text" placeholder="Recipe Title" name="RecipeTitle"> <Br>
+                <label class="my-1 form-label"></label>
+                <input class="w-50 h-25 form control my-3" required type="text" placeholder="Recipe Description" name="RecipeDescription"> <Br>
+            </div>
+            <div style="width: 50%; float: right;">
+                <label class="my-1 form-label">Recipe Steps</label> <br>
+                <input class="w-50 h-25 form control my-3" required type="text" placeholder="Recipe Steps" name="RecipeSteps"> <Br>
+                <label class="my-1 form-label">Recipe Title</label> <br>
+                <input class="w-50 h-25 form control my-3" required type="text" placeholder="Recipe Title" name="RecipeTitle"> <Br>
 
             </div>
         </div>
+        <div class=" a-flex  text-center my-5 fluid-container">
 
+            <a class="btn btn-dark">Submit </a>
+            <a href="profile.php" class="btn btn-dark"> Cancel </a>
+        </div>
     </form>
 
 </body>

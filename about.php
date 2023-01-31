@@ -21,6 +21,7 @@ session_start();
 
 </head>
 
+
 <body>
 
 
@@ -64,51 +65,49 @@ session_start();
 
     </nav>
 
-
-    <!-- Main content -->
-    <div style="text-align: center;" class="container d-block align-content-center text-align-center">
-        <p>
-        <h1>
-            Welcome to your cookbook!
-        </h1>
-        </p>
-        <h3>
-            <p>Place where you will be able to look for recipes ranging from easiest you can find to hardest you can try!</p>
-        </h3>
-    </div>
-
-
-
-    <div class="main-container align-content-center d-flex">
-
-        <div class="container">
-            <div class="left-collumn">
-                <a href="#Recipes" class="buttonA">View Recipes</a>
-                <Br>
-
-                <a href="/login.php" class="buttonA"> Login here</a>
-            </div>
-            <div class="right-collumn">
-                <img class=" img-fluid" src="/Images/chefcoverphoto.jpg">
-            </div>
+    <main>
+        <div class="fluid-container mx-3">
+            <h1 class="aboutus text-center pb-5 ">About Us</h1>
         </div>
-    </div>
+        <div class=" mx-5 fluid-container">
+            <p class=" bg-info rounded  py-3 h3   my-3 text-md-center">
+                This webiste has been created in mind of people who were stuck inside of their own houses during the pandemic.
+                Pandemic has caused big changes to the way we interact with others as well as the way we feed ourselves.
+            </p>
+
+        </div>
+        <div class="mb-5 mx-2">
+            <p class=" bg-info rounded  py-3 h5  px-4 my-3 text-sm-center">
+                That is why we wanted to create something that will show people that cooking is not hard at all. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quae, enim sit quidem, molestiae consectetur aspernatur qui ratione velit libero rerum dolorum ullam consequuntur, officia iusto in hic voluptatum doloremque temporibus obcaecati nisi! Ipsum reiciendis ducimus porro neque enim rerum minima exercitationem unde voluptate iure nam illum dicta eius deleniti, eum illo ullam sed quibusdam? Qui, soluta, molestiae sint fugit error rerum perferendis magnam, nulla quae labore unde iure harum eveniet cupiditate quod tempora pariatur nobis nisi eum dolor quos id vel quasi. Commodi vitae soluta dolorem laborum similique consectetur, mollitia dolor iure, repudiandae eaque necessitatibus. Quis sed soluta error.
+            </p>
+        </div>
+        <div class="mx-6 mt-5 text-center fluid-container">
+            <p style=" padding: 5px 20px 5px 20px;" class="px-5  bg-light rounded">Here you can view the <a href="recipes.php" class="btn btn-primary">Recipes</a></p>
+        </div>
+        <div class="mx-6 text-center fluid-container">
+            <p  style=" padding: 5px 20px 5px 20px;" class="px-5 font-italic bg-light rounded">Here you can view the <a href="register.php" class="btn btn-secondary">Register</a> or <a class="btn btn-secondary" href="login.php">Login</a></p>
+        </div>
+
+    </main>
 
 
-    <br>
+
+
+
+
     <!-- Footer -->
     <div class="container-fluid footer d-flex align-content-center">
         <div class="footer-left-collumn container-fluid ">
             <div style="padding-top:1rem; float:left;">
-                <a class="footer-link" href="/index.php">Home</a><br>
-                <a class="footer-link" href="#Recipes">Recipes</a><br>
-                <a class="footer-link" href="#">About</a><br>
+                <a href="/index.php">Home</a><br>
+                <a href="#Recipes">Recipes</a><br>
+                <a href="#">About</a><br>
             </div>
             <div style="padding-top: 1rem;">
-                <a class="footer-link" href="#UserLogin">User Login</a><br>
-                <a class="footer-link" href="#Admin Login">Admin login</a><br>
+                <a href="#UserLogin">User Login</a><br>
+                <a href="#Admin Login">Admin login</a><br>
             </div>
-            <div>
+            <div class="text-center">
 
                 <a href="/index.php">
                     <img class="footer-logo" src="/Images/cookbooklogo.svg">
@@ -117,7 +116,6 @@ session_start();
         </div>
 
     </div>
-
 
 </body>
 

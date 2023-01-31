@@ -31,12 +31,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row=mysqli_fetch_assoc($result);
         //Assigns UserID from the row using the login data.
         $UserID = $row['UserID'];
+        $firstname = $row['Firstname'];
+        $permission = $row['permission'];
         //Puts these attributes to session so they are going to be used on next page.
         $_SESSION['login_user'] = $email;
+        $_SESSION['Firstname'] = $firstname;
+        $_SESSION['permission'] = $permission;
         $_SESSION['UserID'] = $UserID;
         $_SESSION['loggedin'] = true; 
         //if the if statement is successful, the user will be moved to their profile page.
-        header("Location: profile.php");
+        header("Location: profiletype.php");
     }
     //if the if statement fails, display the message.
     else{
@@ -93,7 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Contact</a></li>
                             <li><a class="dropdown-item active" href="/login.php">Login</a></li>
-                            <p> <?php echo $error; ?> </p>
                         </ul>
                     </li>
                     <li>
@@ -153,6 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
+    
 </body>
 
 </html>

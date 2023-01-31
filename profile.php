@@ -2,6 +2,8 @@
 include "logic.php";
 session_start();
 //include "auth_session.php";
+$_SESSION['Firstname'];
+$_SESSION['UserID'];
 if (!isset($_SESSION['login_user'])) {
     header("Location: login.php");
 }
@@ -16,8 +18,8 @@ $count = mysqli_num_rows($resultID);
 $row = mysqli_fetch_assoc($resultID);
 $UserID = $row['UserID'];
 
-
-$sql = ("SELECT * FROM tblrecipe where UserID = '$UserID' ORDER BY RecipeID ASC LIMIT 5");
+//Statement 
+$sql = ("SELECT * FROM tblrecipe where UserID = '{$_SESSION['UserID']}' ORDER BY RecipeID ASC LIMIT 5");
 $query = mysqli_query($conn, $sql);
 $result = $conn->query($sql);
 $count = mysqli_num_rows($query);
@@ -25,6 +27,7 @@ $count = mysqli_num_rows($query);
 
 <!DOCTYPE html>
 <html lang="en">
+
 
 <head>
     <meta charset="UTF-8">
@@ -93,35 +96,85 @@ $count = mysqli_num_rows($query);
     </div>
 
     <div class="grid-container1 my-5">
-        <div class="item1 d-flex"> Hello <?php echo ($_SESSION['login_user']) ?>!
+        <div class="item1 d-flex">
+            <h1> Welcome <?php echo ($_SESSION['Firstname']) ?>!</h1>
 
 
         </div>
         <div class="item2">
             <a href="" class="btn btn-dark">View My Recipes</a> <br>
             <a href="" class="btn btn-dark">View Profile Details</a><br>
-            <a href="" class="btn btn-dark">Add New Recipe</a>
+            <a href="addrecipe.php" class="btn btn-dark">Add New Recipe</a>
 
 
         </div>
 
-        <div class="item3">Main
+        <div class="item3">
+            <p>Your Recent Recipes</p>
+            <!-- for loop to print out 4 latest recipes added by the user. -->
             <?php $i = 0;
+
             foreach ($query as $q) :
+                //if the table will have 3 rows of Recipes, stop the sequence.
                 if ($i == 3) {
                     break;
                 } { ?>
 
-                    <?php echo $q['RecipeTitle'], " ", $q['RecipeCalories'], "Calorie ",  $q['CookingTime'], "Mins" ?> <br> <?php ?>
+                    <table class='my-3 profileRecipe'>
+                        <tr>
+                            <th>Recipe Title: &nbsp; </th>
+                            <th>Calories: &nbsp; </th>
+                            <th>Cooking Time: &nbsp; </th>
+                            <th></th>
+                        </tr>
 
 
+                        <?php
+                        //printing out each Collumn with the attributes below. 
+                        echo "<tr><td>" . $q['RecipeTitle']
+                            . "</td><td>"
+                            . $q['RecipeCalories']
+                            . "</td><td>"
+                            . $q['CookingTime'] . "Mins"
+                            //a button to View the recipe. using the RecipeID to then fill out the detials ont he next page.
+                            . "<td> <a class='btn btn-dark' href='editRecipe.php?RecipeID=" . $q['RecipeID'] . "'> View </a> </td> 
+                    </tr>" ?>
+                    </table>
                 <?php }  ?>
             <?php
                 $i++;
             endforeach;
+            if ($i == 0) {
+                echo "<p class='bg-info mx-3 rounded '; style='font-style:italic' >    No Recipes have been created yet. </p> ";
+            }
             ?>
         </div>
-        <div class="item4">Right</div>
+        <div class="item4">
+            Right</div>
+    </div>
+
+
+
+
+    <div class="container-fluid footer d-flex align-content-center">
+        <div class="footer-left-collumn container-fluid ">
+            <div style="padding-top:1rem; float:left;">
+                <a class="footer-link" href="/index.php">Home</a><br>
+                <a class="footer-link" href="#Recipes">Recipes</a><br>
+                <a class="footer-link" href="#">About</a><br>
+            </div>
+            <div style="padding-top: 1rem;">
+                <a class="footer-link" href="#UserLogin">User Login</a><br>
+                <a class="footer-link" href="#Admin Login">Admin login</a><br>
+            </div>
+            <div>
+
+                <a href="/index.php">
+                    <img class="footer-logo" src="/Images/cookbooklogo.svg">
+                </a>
+            </div>
+        </div>
+
     </div>
 
 

@@ -3,6 +3,9 @@ include "logic.php";
 session_start();
 //include "auth_session.php";
 $_SESSION['Firstname'];
+if ($_SESSION['permission'] == "user") {
+    header("Location: profile.php?user");
+} 
 if (!isset($_SESSION['login_user'])) {
     header("Location: login.php");
 }

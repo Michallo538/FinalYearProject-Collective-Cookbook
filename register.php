@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $error = "That Email already exists in our System!";
         }
-    } else {
+        } else {
         $query = "INSERT into user( firstname, lastname,  gender, email,  password, create_datetime)
                 VALUES ('$firstname',  '$lastname', '$gender', '$email', '" . md5($password) . "', '$create_datetime')";
 
@@ -128,9 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
 
-    <form action="" method="post" style="text-align:  -webkit-center;">
-        <div
-            class="container Login-Form my-5 container-fluid align-items-center d-flex justify-content-center align-center rounded">
+    <form action="" method="post" style="text-align: -webkit-center;">
+        <div 
+            class=" container Login-Form  my-5 container-fluid align-items-center d-flex justify-content-center align-center rounded">
             <div class="left-collumn">
                 <div class="form-group mb-3">
                     <label class="my-3"> Input your First name </label> <br>

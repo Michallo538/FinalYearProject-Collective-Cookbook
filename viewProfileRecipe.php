@@ -1,7 +1,41 @@
 <?php
 include "logic.php";
 session_start();
+/*
+$sql = "SELECT * FROM tblrecipe WHERE RecipeID = '$RecipeID';";
+$result = mysqli_query($conn, $sql);
+$count = mysqli_num_rows($result);
+$row = mysqli_fetch_assoc($result);
+$recipeID = $row['RecipeID'];
+$recipeTitle = $row['RecipeTitle'];
+$recipeDescription = $row['RecipeDescription'];
+$recipeCalories = $row['RecipeCalories'];
+*/
 
+if (!isset($_SESSION['login_user'])) {
+    header("Location: login.php");
+}
+if (!isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+    header("Location: login.php");
+}
+
+if (isset($_REQUEST['RecipeID'])) {
+    $RecipeID = $_GET['RecipeID'];
+    $sql = "SELECT  * FROM tblrecipe WHERE RecipeID = $RecipeID";
+    $query = mysqli_query($conn, $sql);
+    $rowUID = mysqli_fetch_assoc($query);
+    $UserID = $rowUID['UserID'];
+}
+$asql = "SELECT * FROM user WHERE UserID =' {$_SESSION['UserID']}'";
+$resultAuthor = mysqli_query($conn, $asql);
+$aCount = mysqli_num_rows($resultAuthor);
+$row = mysqli_fetch_assoc($resultAuthor);
+$AuthorFname = $row['Firstname'];
+$AuthorLname = $row['Lastname'];
+
+/*
+
+*/
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +45,9 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page | Cookbook</title>
+    <?php foreach ($query as $q) { ?>
+        <title> Viewing Recipe: <?php echo $q['RecipeTitle']; ?> | Cookbook</title>
+    <?php } ?>
     <link rel="stylesheet" href="/Styles/style.css">
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -33,10 +69,10 @@ session_start();
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/index.php">Home</a>
+                        <a class="nav-link " aria-current="page" href="/index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/recipes.php">Recipes</a>
+                        <a class="nav-link active" href="/recipes.php">Recipes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about.php">About</a>
@@ -52,7 +88,6 @@ session_start();
                     </li>
                 </ul>
 
-
             </div>
             <a href="/login.php">
                 <svg class="profileicon" xmlns="http://www.w3.org/2000/svg" style="width: 40px;" viewBox="0 0 448 512">
@@ -64,60 +99,47 @@ session_start();
 
     </nav>
 
-
-    <!-- Main content -->
-    <div style="text-align: center;" class="container d-block align-content-center text-align-center">
-        <p>
-        <h1>
-            Welcome to your cookbook!
-        </h1>
-        </p>
-        <h3>
-            <p>Place where you will be able to look for recipes ranging from easiest you can find to hardest you can try!</p>
-        </h3>
+    <div>
+        <?php
+        print_r($_SESSION);
+        ?>
     </div>
 
-
-
-    <div class="main-container align-content-center d-flex">
-
-        <div class="container">
-            <div class="left-collumn">
-                <a href="#Recipes" class="buttonA">View Recipes</a>
-                <Br>
-
-                <a href="/login.php" class="buttonA"> Login here</a>
-            </div>
-            <div class="right-collumn">
-                <img class=" img-fluid" src="/Images/chefcoverphoto.jpg">
-            </div>
-        </div>
-    </div>
-
-
-    <br>
-    <!-- Footer -->
-    <div class="container-fluid footer d-flex align-content-center">
-        <div class="footer-left-collumn container-fluid ">
-            <div style="padding-top:1rem; float:left;">
-                <a class="footer-link" href="/index.php">Home</a><br>
-                <a class="footer-link" href="/recipes.php">Recipes</a><br>
-                <a class="footer-link" href="/about.php">About</a><br>
-            </div>
-            <div style="padding-top: 1rem;">
-                <a class="footer-link" href="/login.php">User Login</a><br>
-                <a class="footer-link" href="#Admin Login">Admin login</a><br>
-            </div>
-            <div>
-
-                <a href="/index.php">
-                    <img class="footer-logo" src="/Images/cookbooklogo.svg">
-                </a>
-            </div>
-        </div>
+    <div class="fluid-container py-2 mt-3 mx-5 my-5  bg-info rounded align-items-center">
+        <h2 class="text-center">Viewing: <?php echo $q['RecipeTitle'] ?></h2>
 
     </div>
+    <div class="fluid-container  py-2 mt-3 mx-5 px-2 my-5 bg-info ">
+        <?php foreach ($query as $q) { ?>
+            <div class="grid-container">
+                <div class="picture"><img> Image </div>
+                <div class="main">
+                    <div class="main h1 RecipeTitle">
 
+                        <?php echo $q['RecipeTitle'] ?> </div>
+
+                    <?php foreach ($resultAuthor as $qq) { ?>
+
+                        <div class="main h4 recipeAuthor">
+                            <?php echo  '<a href="ViewProfile.php?UserID=' . $q['UserID'] . '">' . $qq['Firstname'] . '&nbsp' . $qq['Lastname'] . "</a>"; ?>
+
+                        </div>
+                    <?php } ?>
+                    <div class="main">
+                        <?php echo $q['RecipeCalories'] . " Cal"; ?>
+                    </div>
+                    <div class="main">Planning list - Prep time cooking time difficulty how many servses</div>
+
+                </div>
+                <div class="menu">Menu</div>
+                <div class="main">Main</div>
+            </div>
+
+        <?php } ?>
+    </div>
+    <div style="float:right;" class="fluid-container  py-2 mt-3 mx-5 px-2 my-5 ">
+        <a class="btn btn-primary" <?php session_abort(); ?> href="/profile.php">Back</a>
+    </div>
 
 </body>
 

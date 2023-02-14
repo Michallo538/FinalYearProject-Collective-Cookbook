@@ -1,14 +1,13 @@
 <?php
-    include "logic.php";
-    session_start();
-    $_SESSION['permission'];
+include "logic.php";
+session_start();
+$_SESSION['permission'];
 
-    if($_SESSION['permission'] == "user")
-    {
-        header("Location: profile.php?userloggedin");
-    }elseif($_SESSION['permission'] == "admin"){
-        header("Location: adminprofile.php");
-    }
+if ($_SESSION['permission'] == "user") {
+    header("Location: profile.php?userloggedin");
+} elseif ($_SESSION['permission'] == "admin") {
+    header("Location: adminprofile.php");
+}
 
 
 ?>
@@ -29,6 +28,9 @@
 </head>
 
 <body>
+
+
+    <h1> <?php print_r($_SESSION); ?></h1>
 
 </body>
 

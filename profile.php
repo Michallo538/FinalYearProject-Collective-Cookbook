@@ -4,6 +4,9 @@ session_start();
 //include "auth_session.php";
 $_SESSION['Firstname'];
 $_SESSION['UserID'];
+if ($_SESSION['permission'] == "admin") {
+    header("Location: adminprofile.php");
+}
 if (!isset($_SESSION['login_user'])) {
     header("Location: login.php");
 }
@@ -83,10 +86,6 @@ $count = mysqli_num_rows($query);
             </div>
 
 
-
-
-
-
     </nav>
 
     <div>
@@ -102,14 +101,17 @@ $count = mysqli_num_rows($query);
 
         </div>
         <div class="item2">
-            <a href="" class="btn btn-dark">View My Recipes</a> <br>
-            <a href="" class="btn btn-dark">View Profile Details</a><br>
-            <a href="addrecipe.php" class="btn btn-dark">Add New Recipe</a>
+            <?php { ?>
+                <a class='my-1 btn btn-dark' href="viewOwnRecipes.php?UserID=<?php echo $UserID ?>"> View My Recipes </a> <br>
+                <a class='my-1 btn btn-dark' href="viewProfileOwn.php?UserID=<?php echo $UserID ?>"> View Profile Details </a> <br>
+                <a class='my-1 btn btn-dark' href="addrecipe.php?UserID=<?php echo $UserID ?>"> Add New Recipe </a><br>
 
-
+            <?php
+            }
+            ?>
         </div>
 
-        <div class="item3">
+        <div class=" item3">
             <p>Your Recent Recipes</p>
             <!-- for loop to print out 4 latest recipes added by the user. -->
             <?php $i = 0;
@@ -119,7 +121,6 @@ $count = mysqli_num_rows($query);
                 if ($i == 3) {
                     break;
                 } { ?>
-
                     <table class='my-3 profileRecipe'>
                         <tr>
                             <th>Recipe Title: &nbsp; </th>
@@ -131,14 +132,14 @@ $count = mysqli_num_rows($query);
 
                         <?php
                         //printing out each Collumn with the attributes below. 
-                        echo "<tr><td>" . $q['RecipeTitle']
-                            . "</td><td>"
+                        echo "<tr class='my-1 mx-1' style='background: #E5E4E2'><td>" . $q['RecipeTitle']
+                            . "</td ><td>"
                             . $q['RecipeCalories']
                             . "</td><td>"
                             . $q['CookingTime'] . "Mins"
                             //a button to View the recipe. using the RecipeID to then fill out the detials ont he next page.
-                            . "<td> <a class='btn btn-dark' href='editRecipe.php?RecipeID=" . $q['RecipeID'] . "'> View </a> </td> 
-                    </tr>" ?>
+                            . "<td> <a style='vertical-align: text-bottom;' class='btn btn-dark' href='viewProfileRecipe.php?RecipeID=" . $q['RecipeID'] . "'> View </a> </td> 
+                        </tr>" ?>
                     </table>
                 <?php }  ?>
             <?php
@@ -160,12 +161,12 @@ $count = mysqli_num_rows($query);
         <div class="footer-left-collumn container-fluid ">
             <div style="padding-top:1rem; float:left;">
                 <a class="footer-link" href="/index.php">Home</a><br>
-                <a class="footer-link" href="#Recipes">Recipes</a><br>
-                <a class="footer-link" href="#">About</a><br>
+                <a class="footer-link" href="/recipes.php">Recipes</a><br>
+                <a class="footer-link" href="/about.php">About</a><br>
             </div>
             <div style="padding-top: 1rem;">
-                <a class="footer-link" href="#UserLogin">User Login</a><br>
-                <a class="footer-link" href="#Admin Login">Admin login</a><br>
+                <a class="footer-link" href="/login.php">User Login</a><br>
+                <a class="footer-link" href="/login.php">Admin login</a><br>
             </div>
             <div>
 

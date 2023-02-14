@@ -40,7 +40,7 @@ a {
 
 .navbar {
 
-    background-image: var(--background-Color1);
+    background-image: blue;
     width: 100%;
     font-size: 25px;
 }
@@ -189,7 +189,7 @@ a {
 
 .Login-Form {
     background-color: #4eb5f1;
-    margin-left: 100px;
+    margin: 50px 0 50px 0;
 }
 
 
@@ -253,4 +253,63 @@ a {
     justify-content: center;
 
 
+}
+
+
+/* Recipe viewing */
+
+
+.picture {
+    grid-area: picture;
+}
+
+.title {
+    grid-area: menu;
+}
+
+.author {
+    grid-area: main;
+}
+
+
+
+.planlist {
+    grid-area: footer;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        'picture main'
+        'menu main';
+    gap: 2px;
+
+}
+
+.grid-container>div {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 20px 0;
+    font-size: 30px;
+}
+
+.RecipeTitle {
+    font-family: 'Fira Sans', sans-serif;
+}
+
+.recipeAuthor {
+    font-family: 'Fira Sans', sans-serif;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px;
+}
+
+.rrow:after {
+    content: "";
+    display: table;
+    clear: both;
 }

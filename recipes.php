@@ -46,17 +46,17 @@ $recipecalories = $row['RecipeCalories'];
                         <a class="nav-link active" aria-current="page" href="/index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Recipes</a>
+                        <a class="nav-link" href="/recipes.php">Recipes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="/about.php">About</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             More
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Contact</a></li>
+                            <li><a class="dropdown-item" href="/contact.php">Contact</a></li>
                             <li><a class="dropdown-item" href="/login.php">Login</a></li>
                         </ul>
                     </li>
